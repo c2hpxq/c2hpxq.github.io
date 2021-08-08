@@ -4,6 +4,7 @@ title:  "llvm tutor cmake file explained"
 date:   2021-08-08 23:31:38 +0800
 categories: jekyll update
 ---
+[TOC]
 # Intro
 LLVM提供基于cmake的配置方式。配置完成后（或可能是build完成后，没有分析这个时机），关于LLVM的一些信息，如版本，头文件目录等将会被存储在指定的cmake文件中，以便若使用LLVM的项目也采用cmake进行配置，可以方便地“include”并使用。
 
