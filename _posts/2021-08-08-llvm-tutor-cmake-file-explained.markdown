@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Plan"
+title:  "llvm tutor cmake file explained"
 date:   2021-08-08 23:31:38 +0800
 categories: jekyll update
 ---
