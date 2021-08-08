@@ -129,3 +129,6 @@ add_subdirectory(tools)
 add_subdirectory(test)
 add_subdirectory(HelloWorld)
 ```
+
+# Reference
+LLVM提供的[cmake primer](https://llvm.org/docs/CMakePrimer.html)
