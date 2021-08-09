@@ -7,9 +7,10 @@ categories: jekyll update
 [TOC]
 # Intro
 LLVM提供基于cmake的配置方式。配置完成后（或可能是build完成后，没有分析这个时机），关于LLVM的一些信息，如版本，头文件目录等将会被存储在指定的cmake文件中，以便若使用LLVM的项目也采用cmake进行配置，可以方便地“include”并使用。
+结合相关cmake文件，学习如何写LLVM subproject的最小配置文件，以及cmake相关语法。
 
 # Main cmake file
-结合相关cmake文件，学习如何写LLVM subproject的最小配置文件，以及cmake相关语法。
+
 ```cmake
 cmake_minimum_required(VERSION 3.13.4)
 ```
@@ -142,7 +143,7 @@ if(NOT LLVM_ENABLE_RTTI)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-rtti")
 endif()
 ```
-编译器选项通过[CMAKE_CXX_FLAGS]指定
+编译器选项通过[CMAKE_CXX_FLAGS](https://cmake.org/cmake/help/latest/envvar/CXXFLAGS.html)指定
 
 ```cmake
 # -fvisibility-inlines-hidden is set when building LLVM and on Darwin warnings
@@ -178,7 +179,7 @@ add_subdirectory(HelloWorld)
 ```
 [add_subdirectory](https://cmake.org/cmake/help/latest/command/add_subdirectory.html)继续配置子目录。相对路径会在当前目录下寻找。subdirectory会“继承”parent cmake file的处理结果
 
-# cmake file for HelloWorld
+# Cmake file for HelloWorld
 ```cmake
 #...
 
