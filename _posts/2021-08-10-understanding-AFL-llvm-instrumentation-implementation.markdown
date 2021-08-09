@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Understanding AFL llvm mode instrumentation implementation"
-date:   2021-08-08 23:31:38 +0800
+date:   2021-08-10 00:20:07 +0800
 categories: jekyll update
 ---
 
