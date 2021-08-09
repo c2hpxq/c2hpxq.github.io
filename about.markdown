@@ -4,4 +4,4 @@ title: About
 permalink: /about/
 ---
 
-Currently work on find Linux kernel related bugs by static analysis / SA facilitated dynamic testing technique.
+Currently work on finding Linux kernel related bugs with the help of  static analysis / SA facilitated dynamic testing techniques.
