@@ -1,0 +1,33 @@
+---
+layout: post
+title:  "Mac libiconv issue"
+date:   2021-08-10 20:06:02 +0800
+categories: jekyll update
+---
+
+# 问题
+> Symbol not found: _iconv
+>  Referenced from: /usr/lib/libarchive.2.dylib
+>  Expected in: /Users/me/opt/anaconda3/lib/libiconv.2.dylib
+> in /usr/lib/libarchive.2.dylib
+
+> Symbol not found: _libiconv
+>  Referenced from: /Users/me/opt/anaconda3/lib/libxml2.2.dylib
+>  Expected in: /Users/me/opt/anaconda3/lib/libiconv.2.dylib
+> in /Users/me/opt/anaconda3/lib/libxml2.2.dylib
+
+一番搜索发现，mac版本的libiconv很多符号都改为以_iconv开头，而原本的GNU版本是以_libiconv开头的。
+系统已经用了很久了，完全不知道什么时候开始引入的GNU版本，导致现在依赖2个版本的dylib都有。
+同时比较奇怪的：/usr/lib下没有libiconv，也没有libarchive。[/usr/lib下缺少库文件](https://developer.apple.com/forums/thread/655588)的回答里有提到，big sur更新后，[在文件系统里不显示系统库了](https://developer.apple.com/documentation/macos-release-notes/macos-big-sur-11_0_1-release-notes)：
+> New in macOS Big Sur 11.0.1, the system ships with a built-in dynamic linker cache of all system-provided libraries. As part of this change, copies of dynamic libraries are no longer present on the filesystem. Code that attempts to check for dynamic library presence by looking for a file at a path or enumerating a directory will fail. Instead, check for library presence by attempting to dlopen() the path, which will correctly check for the library in the cache. (62986286)
+
+1. 找不到libarchive，那么就无法用install_name_tool来指定使用某个libiconv；
+2. 找不到系统自带的libiconv，无从指定。
+
+
+# 救急
+1. 将/Users/me/opt/anaconda3/lib/libiconv.2.dylib重命名为/Users/me/opt/anaconda3/lib/libiconv.2.dylib.old
+2. 从可靠的旧版系统获取一个系统libiconv，让/Users/me/opt/anaconda3/lib/libiconv.2.dylib指向该libiconv。这样，libarchive可以工作了。
+3. 用install_name_tool手动修改libxml
+> install_name_tool -change @rpath/libiconv.2.dylib @rpath/libiconv.2.dylib.old /Users/chenhongcheng/opt/anaconda3/lib/libxml2.2.dylib
+
