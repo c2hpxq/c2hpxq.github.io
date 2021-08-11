@@ -199,5 +199,17 @@ target_link_libraries(HelloWorld
 [target_link_libraries](https://cmake.org/cmake/help/latest/command/target_link_libraries.html)：指定需要链接的库、链接参数。
 这是cmake file的结尾。没有显式指定target要链接哪些动态链接库，unsolved symbol等到运行时再进行解决。根据注释，运行时resolve是Linux下的默认行为；而mac下则需要指定选项：`-undefined dynamic_lookup`来显式命令runtime search。
 
+update:
+引号中的表达式是cmake的[cmake-generator-expressions](https://cmake.org/cmake/help/latest/manual/cmake-generator-expressions.7.html)
+> $<PLATFORM_ID:platform_ids>
+> where platform_ids is a comma-separated list. 1 if the CMake's platform id matches any one of the entries in platform_ids, otherwise 0.
+
+所以在mac下`$<$<PLATFORM_ID:Darwin>:-undefined dynamic_lookup>`会解析成`$<1:-undefined dynamic_lookup>`；
+
+> $<condition:true_string>
+> Evaluates to true_string if condition is 1. Otherwise evaluates to the empty string.
+
+所以`$<1:-undefined dynamic_lookup>`就解析成`undefined dynamic_lookup`
+
 # Reference
 LLVM提供的[cmake primer](https://llvm.org/docs/CMakePrimer.html)
